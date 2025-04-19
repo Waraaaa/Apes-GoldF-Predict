@@ -36,13 +36,15 @@ Any relevant academic or practical context.
 
 ## ⚙️ Installation
 
-Step-by-step instructions to get your project running locally.
+Step-by-step instructions to get the project running locally.
 
 ```bash
-# Example:
-git clone https://github.com/yourusername/your-repo-name.git
-cd your-repo-name
-pip install -r requirements.txt
+# Clone the repository
+git clone https://github.com/Waraaaa/apes-goldf-predict.git
+cd apes-goldf-predict
+
+# Install required packages (if we have one, put the name in requirement.txt)
+pip install -r requirement.txt
 ```
 
 <br>
@@ -65,8 +67,6 @@ How to run the project:
 └── README.md
 ```
 - `main.py`: Entry point for running the tool
-- `analyzer.py`: Contains core logic for disk usage analysis
-- `utils.py`: Helper functions for formatting and path handling
 - etc
 
 <br>
