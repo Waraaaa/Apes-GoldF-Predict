@@ -2,6 +2,8 @@
 
 This repository is for a gold future price prediction project of ITCS227: Introduction to Data Science by Apes Together Strong group (section 2).
 
+<br>
+
 ## 🔍 Table of Contents
 
 - [About](#about)
@@ -14,17 +16,23 @@ This repository is for a gold future price prediction project of ITCS227: Introd
 - [License](#license)
 - [Contact](#contact)
 
+<br>
+
 ## 📖 About
 
 Explain the background of the project.  
 Why was it built? What problem does it solve?  
 Any relevant academic or practical context.
 
+<br>
+
 ## ✨ Features
 
 - Feature 1 (this program can do what)
 - Feature 2
 - Any cool or unique implementations
+
+<br>
 
 ## ⚙️ Installation
 
@@ -37,9 +45,13 @@ cd your-repo-name
 pip install -r requirements.txt
 ```
 
+<br>
+
 ## 🚀 Usage
 
 How to run the project:
+
+<br>
 
 ## 🗂️ Project Structure
 
@@ -57,9 +69,13 @@ How to run the project:
 - `utils.py`: Helper functions for formatting and path handling
 - etc
 
+<br>
+
 ## 🧪 Examples
 
 output examples, maybe screenshots
+
+<br>
 
 ## 🤝 Contributing
 
@@ -69,6 +85,8 @@ Apes Together Strong (section 2)
 - 6688021 Apinut Cotivongsa
 - 6688032 Nipada Jadjaidee
 - 6688157 Woraphol Meakapat
+
+<br>
 
 ## 📄 License
 
