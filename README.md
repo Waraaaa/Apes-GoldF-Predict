@@ -14,7 +14,6 @@ This repository is for a gold future price prediction project of ITCS227: Introd
 - [Examples](#examples)
 - [Contributing](#contributing)
 - [License](#license)
-- [Contact](#contact)
 
 <br>
 
@@ -38,7 +37,7 @@ Any relevant academic or practical context.
 
 Step-by-step instructions to get the project running locally.
 
-```bash
+```Installation
 # Clone the repository
 git clone https://github.com/Waraaaa/apes-goldf-predict.git
 cd apes-goldf-predict
@@ -51,13 +50,15 @@ pip install -r requirement.txt
 
 ## 🚀 Usage
 
-How to run the project:
+```Run the main.py
+python main.py
+```
 
 <br>
 
 ## 🗂️ Project Structure
 
-```
+```Structure
 ├── data/
 ├── src/
 │   ├── module1.py
