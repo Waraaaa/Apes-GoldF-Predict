@@ -24,7 +24,7 @@ df['dayofweek'] = df['Date'].dt.dayofweek
 
 df.dropna(inplace=True)
 
-# Feature columns (predict short-term)
+# Feature columns
 features = ['year', 'month', 'day', 'dayofweek', 
             'Close_lag1', 'Close_lag7', 'Close_rolling7', 'Close_pct_change',
             'Open', 'High', 'Low']
@@ -50,38 +50,19 @@ r2 = r2_score(y_test, y_pred)
 print(f"MAE: {mae:.2f}")
 print(f"R² Score: {r2:.2f}")
 
-#Plot
-import matplotlib.pyplot as plt
-
-# Make date column -> datetime
-df['Date'] = pd.to_datetime(df['Date'])
-
-# Make test data to weekly (or monthly) to reduce clutter & smoother plot
+# Make test data for weekly plotting
 test_plot = pd.DataFrame({
     'Date': df.loc[X_test.index, 'Date'],
     'Actual': y_test,
     'Predicted': y_pred
 }).set_index('Date').resample('W').mean().dropna()
 
-# Do Plot
-plt.figure(figsize=(12, 6))
-plt.plot(test_plot.index, test_plot['Actual'], label='Actual', color='blue')
-plt.plot(test_plot.index, test_plot['Predicted'], label='Predicted', color='orange')
-plt.xlabel('Date')
-plt.ylabel('Gold Future Close Price')
-plt.title('Gold Future Price Prediction (XGBoost Regressor, Weekly Avg)')
-plt.legend()
-plt.grid(True)
-plt.tight_layout()
-plt.show()
-
+# Predict future prices
 def predict_price(date_str):
     date = pd.to_datetime(date_str)
 
-    # Get latest known row to fill lag values
     latest = df.iloc[-1]
 
-    # Build a single-row input DataFrame
     input_data = pd.DataFrame({
         'year': [date.year],
         'month': [date.month],
@@ -99,7 +80,7 @@ def predict_price(date_str):
     prediction = model.predict(input_data)[0]
     return round(prediction, 2)
 
-# Test
+# Future dates to predict
 future_dates = [
     "2024-04-14",
     "2024-04-21",
@@ -108,7 +89,47 @@ future_dates = [
     "2024-06-02"
 ]
 
-# Predict gold future prices for each date
+# Collect predictions
+future_preds = []
 for date_str in future_dates:
     predicted_price = predict_price(date_str)
+    future_preds.append({'Date': pd.to_datetime(date_str), 'Predicted': predicted_price})
     print(f"Predicted Gold Future Price for {date_str}: ${predicted_price}")
+
+# Build future prediction DataFrame
+future_df = pd.DataFrame(future_preds).set_index('Date')
+future_df['Actual'] = None  # No actual values
+
+# Combine with test_plot for extended plot
+extended_plot = pd.concat([test_plot, future_df]).sort_index()
+
+
+
+# Plot
+import matplotlib.dates as mdates
+plt.figure(figsize=(10, 5))  # smaller figure
+
+# Plot actual values
+plt.plot(extended_plot.index, extended_plot['Actual'], label='Actual (Test)', color='blue', linewidth=2)
+
+# Plot predicted values up to latest known date
+past_preds = extended_plot.loc[extended_plot.index <= df['Date'].iloc[-1], 'Predicted']
+plt.plot(past_preds.index, past_preds, label='Model Prediction (Test)', color='orange', linewidth=2)
+
+# Plot future forecast (after last dataset date) 
+future_preds_plot = extended_plot.loc[extended_plot.index > df['Date'].iloc[-1], 'Predicted']
+plt.plot(future_preds_plot.index, future_preds_plot, label='Forecast (Future)', color='red', linestyle='--', marker='o')
+
+# Vertical line at forecast start
+plt.axvline(df['Date'].iloc[-1], color='gray', linestyle=':', label='Forecast Start')
+
+# Formatting
+plt.xlabel('Date')
+plt.ylabel('Gold Future Close Price')
+plt.title('Gold Future Price Prediction (XGBoost, Weekly Avg)')
+plt.legend(loc='upper left')
+plt.grid(True, linestyle='--', alpha=0.4)
+plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
