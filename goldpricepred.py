@@ -103,8 +103,6 @@ future_df['Actual'] = None  # No actual values
 # Combine with test_plot for extended plot
 extended_plot = pd.concat([test_plot, future_df]).sort_index()
 
-
-
 # Plot
 import matplotlib.dates as mdates
 plt.figure(figsize=(10, 5))  # smaller figure
@@ -133,3 +131,5 @@ plt.gca().xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m'))
 plt.xticks(rotation=45)
 plt.tight_layout()
 plt.show()
+
+
